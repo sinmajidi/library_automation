@@ -1,0 +1,16 @@
+{%if user:%}
+<li class="nav-item">
+<a class="nav-item nav-link active" href="/borrow_book">امانت کتاب </a>
+</li>
+<li class="nav-item">
+<a class="nav-item nav-link active" href="/logout">خروج </a>
+</li>
+{%endif%}
+{%if not user:%}
+<li class="nav-item">
+<a class="nav-item nav-link active" href="/register">ثبت نام </a>
+</li>
+<li class="nav-item">
+         <a class="nav-item nav-link active" href="/login">ورود </a>
+</li>
+{%endif%}

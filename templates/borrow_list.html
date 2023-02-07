@@ -1,0 +1,116 @@
+{%extends'base.html'%}
+
+{%block content%}
+<br>
+<div class="container">
+<div class="grad">
+   {%if user:%}
+<center>
+
+        <table style="text-align: center;" class="table">
+  <thead>
+  <tr>
+
+       <th>نام کتاب</th>
+       <th>شناسه کتاب</th>
+       <th>نام دانش آموز</th>
+    <th>نام خانوادگی دانش آموز</th>
+       <th>شماره ی دانش آموزی</th>
+      <th>تاریخ اولین امانت</th>
+      <th>تعداد روز های در امانت مانده </th>
+      <th>تعداد بار های تمدید </th>
+      <th>کتابدار</th>
+  </tr>
+  </thead>
+    <tbody>
+ {%for borrow in borrows:%}
+{% if ( time_now-jdatetime.datetime.strptime(borrow.second_date_of_borrow, '%Y/%m/%d').date() ).days >30 %}
+       <tr style="background-color: #ffad9b">
+        <td>
+                    {{borrow.book_topic}}
+        </td>
+        <td>
+                   {{borrow.book_code}}
+        </td>
+            <td>
+                    {{borrow.student_name}}
+        </td>
+        <td>
+                   {{borrow.student_family}}
+        </td>
+           <td>
+                   {{borrow.student_number}}
+        </td>
+           <td>
+                   {{borrow.first_date_of_borrow}}
+        </td>
+           <td>
+                {{( time_now-jdatetime.datetime.strptime(borrow.second_date_of_borrow, '%Y/%m/%d').date() ).days}}
+           </td>
+
+           <td>
+                {{borrow.number_of_extention}}
+           </td>
+
+            <td>
+                   {{borrow.librarian}}
+        </td>
+
+        <td>
+           <a href="{{url_for('delete_borrow',borrow_id=borrow.id)}}" class="btn btn-outline-danger" style="float: right;">بازگشت کتاب</a>
+        </td>
+           {%if borrow.number_of_extention<1%}
+           <td>
+           <a href="{{url_for('refresh_borrow',borrow_id=borrow.id)}}" class="btn btn-outline-danger" style="float: right;">تمدید کتاب</a>
+        </td>
+           {%endif%}
+    </tr>
+ {%else:%}
+ <tr>
+        <td>
+                    {{borrow.book_topic}}
+        </td>
+        <td>
+                   {{borrow.book_code}}
+        </td>
+            <td>
+                    {{borrow.student_name}}
+        </td>
+        <td>
+                   {{borrow.student_family}}
+        </td>
+           <td>
+                   {{borrow.student_number}}
+        </td>
+           <td>
+                   {{borrow.first_date_of_borrow}}
+        </td>
+     <td>
+                {{( time_now-jdatetime.datetime.strptime(borrow.second_date_of_borrow, '%Y/%m/%d').date() ).days}}
+           </td>
+     <td>
+                {{borrow.number_of_extention}}
+           </td>
+            <td>
+                   {{borrow.librarian}}
+        </td>
+
+        <td>
+           <a href="{{url_for('delete_borrow',borrow_id=borrow.id)}}" class="btn btn-outline-danger" style="float: right;"> بازگشت کتاب</a>
+        </td>
+
+    </tr>
+ {% endif %}
+     {% endfor %}
+
+
+</tbody>
+</table>
+
+</center>
+<button onclick="history.back()" class="btn btn-outline-danger">بازگشت</button>
+    {%endif%}
+
+    </div>
+     </div>
+{%endblock%}

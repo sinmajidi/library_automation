@@ -1,0 +1,51 @@
+{%extends'base.html'%}
+
+{%block content%}
+<br>
+<div class="container">
+<div class="grad">
+   {%if user:%}
+   <h3 style="float:right;"> کتابدار:{{user}}</h3>
+    <hr style="clear:both;border:2px solid black;">
+
+
+</div>
+
+
+<div style=" width:90%;margin: auto; background-color: #33ffb5;padding: 1%;" class="card">
+    <a href="/add_book" type="button" class="btn btn-outline-dark">ثبت اولیه کتاب</a>
+    <br>
+    <a href="/add_student" type="button" class="btn btn-outline-dark">ثبت اولیه دانش آموز</a>
+</div>
+<hr style="border:5px solid black;background-color: black;">
+<div style=" width:90%;margin: auto; background-color: #26ffdf;padding: 1%;" class="card">
+    <a href="/borrow_book" type="button" class="btn btn-outline-dark">امانت دادن کتاب</a>
+    <br>
+    <a href="/borrow_list" type="button" class="btn btn-outline-dark">لیست کتب به امانت برده شده</a>
+</div>
+<hr style="border:5px solid black;background-color: black;">
+<div style=" width:90%;margin: auto; background-color: #64ff8e;padding: 1%;" class="card">
+    <a href="/book_list" type="button" class="btn btn-outline-dark">لیست کتاب های کتابخانه</a>
+    <br>
+    <a href="/student_list" type="button" class="btn btn-outline-dark">اسامی دانش آموزان عضو کتابخانه</a>
+</div>
+
+
+
+
+
+    <br><br>
+    <a href="/logout" type="button" class="btn btn-outline-danger">خروج</a>
+    <br><br>
+
+
+    {%else:%}
+    <center>
+    <br><br>
+        <img src="./static/logo.png" style="height: 75%;width: 50%;">
+           <a class="btn btn-dark" href="/login" role="button">ورود کتابدار</a>
+
+    {%endif%}
+</center>
+    </div>
+{%endblock%}

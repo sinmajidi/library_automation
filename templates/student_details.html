@@ -1,0 +1,178 @@
+{%extends'base.html'%}
+
+{%block content%}
+<br>
+<div class="container">
+<div class="grad">
+   {%if user:%}
+<center>
+{%if borrow_list%}
+<br><hr style="border:5px solid black;background-color: black;"><h3>امانات فعلی</h3><hr style="border:5px solid black;background-color: black;"><br>
+        <table style="text-align: center;" class="table">
+  <thead>
+  <tr>
+
+      <th>نام کتاب</th>
+       <th>شناسه کتاب</th>
+       <th>نام دانش آموز</th>
+    <th>نام خانوادگی دانش آموز</th>
+       <th>شماره ی دانش آموزی</th>
+      <th>تاریخ اولین امانت</th>
+      <th>تعداد روز های در امانت مانده </th>
+      <th>تعداد بار های تمدید </th>
+      <th>کتابدار</th>
+  </tr>
+  </thead>
+    <tbody>
+{%for borrow in borrow_list%}
+{% if ( time_now-jdatetime.datetime.strptime(borrow.second_date_of_borrow, '%Y/%m/%d').date() ).days >14 %}
+       <tr style="background-color: #ffad9b">
+        <td>
+                    {{borrow.book_topic}}
+        </td>
+        <td>
+                   {{borrow.book_code}}
+        </td>
+            <td>
+                    {{borrow.student_name}}
+        </td>
+        <td>
+                   {{borrow.student_family}}
+        </td>
+           <td>
+                   {{borrow.student_number}}
+        </td>
+           <td>
+                   {{borrow.first_date_of_borrow}}
+        </td>
+           <td>
+                {{( time_now-jdatetime.datetime.strptime(borrow.second_date_of_borrow, '%Y/%m/%d').date() ).days}}
+           </td>
+
+           <td>
+                {{borrow.number_of_extention}}
+           </td>
+
+            <td>
+                   {{borrow.librarian}}
+        </td>
+
+
+    </tr>
+ {%else:%}
+ <tr>
+        <td>
+                    {{borrow.book_topic}}
+        </td>
+        <td>
+                   {{borrow.book_code}}
+        </td>
+            <td>
+                    {{borrow.student_name}}
+        </td>
+        <td>
+                   {{borrow.student_family}}
+        </td>
+           <td>
+                   {{borrow.student_number}}
+        </td>
+           <td>
+                   {{borrow.first_date_of_borrow}}
+        </td>
+     <td>
+                {{( time_now-jdatetime.datetime.strptime(borrow.second_date_of_borrow, '%Y/%m/%d').date() ).days}}
+           </td>
+     <td>
+                {{borrow.number_of_extention}}
+           </td>
+            <td>
+                   {{borrow.librarian}}
+        </td>
+
+
+
+    </tr>
+ {% endif %}
+     {% endfor %}
+
+
+
+</tbody>
+</table>
+{%endif%}
+{%if book_history_list%}
+    <br><hr style="border:5px solid black;background-color: black;"><h3>تاریخچه امانت ها</h3><hr style="border:5px solid black;background-color: black;"><br>
+
+            <table style="text-align: center;" class="table">
+  <thead>
+  <tr>
+
+       <th>نام کتاب</th>
+       <th>شناسه کتاب</th>
+       <th>نام دانش آموز</th>
+    <th>نام خانوادگی دانش آموز</th>
+       <th>شماره ی دانش آموزی</th>
+      <th>تاریخ اولین امانت</th>
+      <th>تاریخ بازگشت </th>
+      <th>تعداد روز های امانت </th>
+      <th>تعداد بار های تمدید </th>
+      <th>کتابدار</th>
+  </tr>
+  </thead>
+    <tbody>
+{%for borrow in book_history_list%}
+       <tr>
+        <td>
+                    {{borrow.book_topic}}
+        </td>
+        <td>
+                   {{borrow.book_code}}
+        </td>
+            <td>
+                    {{borrow.student_name}}
+        </td>
+        <td>
+                   {{borrow.student_family}}
+        </td>
+           <td>
+                   {{borrow.student_number}}
+        </td>
+           <td>
+                   {{borrow.date_of_borrow}}
+        </td>
+           <td>
+
+               {{borrow.date_of_back}}
+           </td>
+            <td>
+        {{(jdatetime.datetime.strptime(borrow.date_of_back, '%Y/%m/%d').date() - jdatetime.datetime.strptime(borrow.date_of_borrow, '%Y/%m/%d').date() ).days}}
+        </td>
+
+           <td>
+                {{borrow.number_of_extention}}
+           </td>
+
+
+            <td>
+                   {{borrow.librarian}}
+        </td>
+
+
+    </tr>
+
+
+     {% endfor %}
+
+
+
+</tbody>
+</table>
+{%endif%}
+
+</center>
+<button onclick="history.back()" class="btn btn-outline-danger">بازگشت</button>
+    {%endif%}
+
+    </div>
+     </div>
+{%endblock%}

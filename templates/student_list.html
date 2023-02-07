@@ -1,0 +1,133 @@
+{%extends'base.html'%}
+
+{%block content%}
+<br>
+<div class="container">
+<div class="grad">
+   {%if user:%}
+
+
+<form class="form-search">
+        <input type="text" placeholder="شماره یا نام دانش آموز" id="student_search">
+        <button type="button" class="btn btn-dark" onclick="return loadXMLDoc()">جست و جو</button>
+    </form>
+
+<br><br><br>
+<p id="Result"> </p>
+<script>
+    function loadXMLDoc()
+    {
+        var req = new XMLHttpRequest()
+        req.onreadystatechange = function()
+        {
+            if (req.readyState == 4)
+            {
+                if (req.status != 200)
+                {
+                    //error handling code here
+                }
+                else
+                {
+                    var response = JSON.parse(req.responseText)
+                    document.getElementById('Result').innerHTML='<table style="width:90%;text-align:center;" class="table">' +
+                                           '<thead>' +
+                                           '<tr class="table-secondary">' +
+                                                '<th> ردیف</th>' +
+                                               '<th>دانش آموز</th>' +
+                                             '<th>شماره دانش آموزی</th>' +
+                                            '<th>شماره تماس دانش آموز</th>' +
+                                            '<th>شماره تماس ولی دانش آموز</th>' +
+                                            '<th>شماره تماس منزل</th>' +
+                                           '</tr>' +
+                                           '</thead>' +
+                                           '<tbody>' +
+                                           '<tr>' +
+                                                '<td>'+response.id+'</td>' +
+                                                '<td>'+response.student+'</td>' +
+                                                '<td>'+response.student_code+'</td>' +
+                                                '<td>'+response.student_phone+'</td>' +
+                                                '<td>'+response.student_parent_phone+'</td>' +
+                                                '<td>'+response.home_phone+'</td>' +
+                                           '</tr>' +
+                                           '</tbody>'   +
+                        '</table><br><br><br>'
+
+                }
+            }
+        }
+
+        req.open('POST', '/get_student')
+        req.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+        var student_search=document.getElementById('student_search').value
+        var postVars ='student_search='+student_search
+        req.send(postVars)
+
+        return false
+    }
+</script>
+<hr>
+
+
+<center>
+
+        <table style="text-align: center;" class="table">
+  <thead>
+  <tr>
+      <th>ردیف</th>
+    <th>نام </th>
+    <th>نام خانوادگی</th>
+      <th>کد ملی</th>
+      <th>شماره دانش آموزی</th>
+      <th>شماره تماس دانش آموز</th>
+      <th>شماره تماس ولی دانش آموز</th>
+      <th>شماره تماس منزل</th>
+  </tr>
+  </thead>
+    <tbody>
+ {%for student in students:%}
+       <tr>
+           <td>
+                    {{student.id}}
+        </td>
+        <td>
+                    {{student.student_name}}
+        </td>
+        <td>
+                   {{student.student_family}}
+        </td>
+            <td>
+                   {{student.student_id_code}}
+        </td>
+           <td>
+                   {{student.student_number}}
+        </td>
+             <td>
+                   {{student.student_phone}}
+        </td>
+            <td>
+                   {{student.student_parent_phone}}
+        </td>
+            <td>
+                   {{student.home_phone}}
+        </td>
+         <td>
+           <a href="{{url_for('delete_student',student_id=student.id)}}" class="btn btn-outline-danger" style="float: right;">حذف</a>
+           &nbsp;
+           <a href="{{url_for('student_edit',student_id=student.id)}}" class="btn btn-outline-dark" style="float: right;">ویرایش</a>
+             <a href="{{url_for('student_details',student_id=student.id)}}" class="btn btn-outline-info" style="float: right;">جزئیات</a>
+        </td>
+
+    </tr>
+     {% endfor %}
+
+
+</tbody>
+</table>
+
+</center>
+<button onclick="history.back()" class="btn btn-outline-danger">بازگشت</button>
+    {%endif%}
+
+    </div>
+     </div>
+{%endblock%}

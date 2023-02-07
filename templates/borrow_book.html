@@ -1,0 +1,65 @@
+{%extends'base.html'%}
+
+{%block content%}
+<form action="/borrow_book" method="POST">
+    <div class="main">
+    <p class="sign" align="center">امانت کتاب</p>
+
+    <input class="pass"  type="text" align="center" placeholder="شماره شناسایی کتاب" id="book_code" name="book_code" required>
+    <input class="pass"  type="text" align="center" placeholder="شماره دانش آموزی" id="student_number" name="student_number" required>
+        <center>
+
+ <button type="button" class="btn btn-outline-primary" onclick="return loadXMLDoc()">بررسی</button>
+<br><br><br>
+<p id="Result"> </p>
+<script>
+    function loadXMLDoc()
+    {
+        var req = new XMLHttpRequest()
+        req.onreadystatechange = function()
+        {
+            if (req.readyState == 4)
+            {
+                if (req.status != 200)
+                {
+                    //error handling code here
+                }
+                else
+                {
+                    var response = JSON.parse(req.responseText)
+                    document.getElementById('Result').innerHTML='<table style="width:90%;text-align:center;" class="table">' +
+                                           '<thead>' +
+                                           '<tr class="table-secondary">' +
+                                               '<th>دانش آموز</th>' +
+                                               '<th>عنوان کتاب</th>' +
+                                           '</tr>' +
+                                           '</thead>' +
+                                           '<tbody>' +
+                                           '<tr>' +
+                                                '<td>'+response.student+'</td>' +
+                                                '<td>'+response.book+'</td>' +
+                                           '</tr>' +
+                                           '</tbody>'   +
+                        '</table>'
+                }
+            }
+        }
+
+        req.open('POST', '/get_book_and_student')
+        req.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+        var student_number = document.getElementById('student_number').value
+        var book_code=document.getElementById('book_code').value
+        var postVars = 'student_number='+student_number+'&book_code='+book_code
+        req.send(postVars)
+
+        return false
+    }
+</script>
+
+        <input  type="submit" class="btn btn-outline-dark" role="button"  value="ثبت">
+        <button onclick="history.back()" class="btn btn-outline-danger">بازگشت</button>
+</center>
+
+    </div>
+</form>
+{%endblock%}

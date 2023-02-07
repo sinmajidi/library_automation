@@ -1,0 +1,20 @@
+{%extends'base.html'%}
+
+{%block content%}
+<form action="" method="POST">
+    <div style="text-align:center;">
+    <p align="center">ویرایش کتاب</p>
+        <hr>
+    <form>
+    <input class="pass"  type="text" align="center" placeholder="عنوان کتاب" name="book_topic" value={{book.book_topic}} required>
+         <input class="pass"  type="text" align="center" placeholder="شناسه کتاب" name="book_code" value={{book.book_code}} required>
+        <center>
+            <br>
+        <input  type="submit" class="btn btn-outline-primary" role="button"  value="ویرایش">
+
+                        <button onclick="history.back()" class="btn btn-outline-danger">بازگشت</button>
+</center>
+    </form>
+    </div>
+</form>
+{%endblock%}

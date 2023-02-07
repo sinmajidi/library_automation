@@ -1,0 +1,22 @@
+
+{%extends'base.html'%}
+
+{%block content%}
+<form action="/register" method="POST">
+  <div class="main">
+    <p class="sign" align="center">ثبت نام</p>
+    <form class="form1" action="signup" method="post">
+      <input class="un " type="text" align="center" placeholder="نام کاربری" name="user" required>
+      <input class="pass" type="password" align="center" placeholder="کلمه عبور" name="pas" required>
+      <input class="pass" type="password" align="center" placeholder="تکرار کلمه عبور" name="pass" required>
+      <input class="pass" type="password" align="center" placeholder="رمز مدیریت" name="admin_pass" required>
+      <center>
+        <input class="btn btn-dark" value="ثبت نام" type="submit">
+          </center>
+    </form>
+  </div>
+
+
+</form>
+{%endblock%}
+

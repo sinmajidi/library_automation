@@ -1,0 +1,58 @@
+{%extends'base.html'%}
+
+{%block content%}
+<form action="/add_student" method="POST">
+    <div class="main">
+    <p class="sign" align="center">ثبت اولیه دانش آموز</p>
+    <form class="form1">
+    <input class="pass"  type="text" align="center" placeholder="نام" name="student_name" required>
+    <input class="pass"  type="text" align="center" placeholder="نام خانوادگی" name="student_family" required>
+    <input class="pass" type="number" placeholder="کد ملی" maxlength="10"  name="student_id_code" id="id-code" required>
+        <p style="color: red;font-size: 10px" id="id-code-warning" align="center"></p>
+    <input class="pass"  type="number" align="center" placeholder="شماره دانش آموزی" name="student_number" required>
+    <input class="pass"  type="tel" align="center" placeholder="شماره تماس دانش آموز" name="student_phone" pattern="09(0[1-2]|1[0-9]|3[0-9]|2[0-1])-?[0-9]{3}-?[0-9]{4}" oninvalid="setCustomValidity('فرمت شماره تلفن صحیح نیست ')" onchange="try{setCustomValidity('')}catch(e){}" required>
+    <input class="pass"  type="tel" align="center" placeholder="شماره تماس ولی دانش آموز" name="student_parent_phone" pattern="09(0[1-2]|1[0-9]|3[0-9]|2[0-1])-?[0-9]{3}-?[0-9]{4}" oninvalid="setCustomValidity('فرمت شماره تلفن صحیح نیست ')" onchange="try{setCustomValidity('')}catch(e){}" required>
+    <input class="pass"  type="number" align="center" placeholder="شماره تلفن ثابت" name="home_phone">
+
+        <center>
+        <input  type="submit" class="btn btn-outline-dark" role="button" id="check" value="ثبت">
+                        <button onclick="history.back()" class="btn btn-outline-danger">بازگشت</button>
+</center>
+    </form>
+    </div>
+</form>
+<script>
+    selectElement=document.getElementById('id-code')
+    selectElement.addEventListener('change', (event) => {
+var xv = selectElement.value;
+    if (isNaN(xv)) {
+        document.getElementById("check").disabled = true;
+        document.getElementById("id-code-warning").innerHTML="* کد ملی را به صورت صحیح وارد کنید";
+    } else if (xv == "") {
+        document.getElementById("check").disabled = false;
+        document.getElementById("id-code-warning").innerHTML="";
+    } else if (xv.length < 10) {
+        document.getElementById("check").disabled = true;
+        document.getElementById("id-code-warning").innerHTML="* کد ملی را به صورت صحیح وارد کنید";
+    } else {
+        var yy = 0;
+        var yv = parseInt(yv);
+        for (let i = 0; i < xv.length; i++) {
+            yv = xv[i] * (xv.length - i);
+            yy += yv;
+        }
+        var x = yy % 11;
+        if (x === 0) {
+            document.getElementById("check").disabled = false;
+            document.getElementById("id-code-warning").innerHTML="";
+
+        } else {
+            document.getElementById("check").disabled = true;
+            document.getElementById("id-code-warning").innerHTML="* کد ملی را به صورت صحیح وارد کنید";
+        }
+        yy = 0;
+    }
+
+});
+</script>
+{%endblock%}
